@@ -1,28 +1,46 @@
 package aula182;
 
-import java.io.File;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Programa {
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner (System.in);
 		
-		System.out.println("Entre com um caminho de arquivo: ");
-		String strPasta = sc.nextLine();
+		String pasta = "c:\\temp\\in.txt";
 		
-		File pasta = new File(strPasta);
+		FileReader fr = null;
+		BufferedReader br = null;
 		
-		//pega o nome do arquivo da pasta indicado acima
-		System.out.println("getName: " + pasta.getName());
+		try {
+			fr = new FileReader(pasta);
+			br = new BufferedReader(fr);
+			
+			String linha = br.readLine();
+			
+			while (linha != null) {
+				System.out.println(linha);
+				linha = br.readLine();
+			}
+		}
+		catch (IOException e){
+			System.out.println("Erro: " + e.getMessage());
+		}
+		finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+				if (fr != null) {
+					fr.close();
+				}
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
-		//pega somente o caminho do arquivo da pasta indicado acima
-		System.out.println("getParent: " + pasta.getParent());
-		
-		//pega o caminho completo do arquivo da pasta indicado acima
-		System.out.println("getPath: " + pasta.getPath());
-				
-		sc.close();
 	}
 
 }
